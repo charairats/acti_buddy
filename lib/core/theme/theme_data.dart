@@ -14,6 +14,7 @@
 // ------------------------------------------------------------
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // Brand palette (Adventure Minimal)
 const Color kBrandYellow = Color(0xFFFFD93D); // Primary
@@ -43,12 +44,22 @@ final ThemeData lightTheme = ThemeData(
     surfaceContainerHigh: const Color(0xFFF2F2F2),
   ),
   scaffoldBackgroundColor: kLightSurface,
-  fontFamily: 'Inter',
-  textTheme: const TextTheme(
-    displayLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
-    displayMedium: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-    bodyMedium: TextStyle(fontSize: 14),
-    labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+  textTheme: GoogleFonts.playTextTheme().copyWith(
+    displayLarge: const TextStyle(color: kDarkSurface),
+    displayMedium: const TextStyle(color: kDarkSurface),
+    displaySmall: const TextStyle(color: kDarkSurface),
+    headlineLarge: const TextStyle(color: kDarkSurface),
+    headlineMedium: const TextStyle(color: kDarkSurface),
+    headlineSmall: const TextStyle(color: kDarkSurface),
+    titleLarge: const TextStyle(color: kDarkSurface),
+    titleMedium: const TextStyle(color: kDarkSurface),
+    titleSmall: const TextStyle(color: kDarkSurface),
+    bodyLarge: const TextStyle(color: kDarkSurface),
+    bodyMedium: const TextStyle(color: kDarkSurface),
+    bodySmall: const TextStyle(color: kDarkSurface),
+    labelLarge: const TextStyle(color: kDarkSurface),
+    labelMedium: const TextStyle(color: kDarkSurface),
+    labelSmall: const TextStyle(color: kDarkSurface),
   ),
   cardTheme: const CardThemeData(
     color: Colors.white,
@@ -103,24 +114,28 @@ final ThemeData darkTheme = ThemeData(
     surfaceContainerHigh: const Color(0xFF202020),
   ),
   scaffoldBackgroundColor: kDarkScaffold,
-  fontFamily: 'Inter',
-  textTheme: const TextTheme(
-    displayLarge: TextStyle(
-      fontSize: 24,
-      fontWeight: FontWeight.w800,
-      color: Colors.white,
-    ),
-    displayMedium: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w700,
-      color: Colors.white,
-    ),
-    bodyMedium: TextStyle(fontSize: 14, color: Colors.white),
-    labelMedium: TextStyle(
-      fontSize: 12,
-      fontWeight: FontWeight.w600,
-      color: Colors.white,
-    ),
+  // fontFamily: GoogleFonts.oxanium.toString(),
+  appBarTheme: AppBarTheme(
+    backgroundColor: Colors.transparent,
+    foregroundColor: kLightSurface,
+    centerTitle: false,
+  ),
+  textTheme: GoogleFonts.playTextTheme().copyWith(
+    displayLarge: const TextStyle(color: kLightSurface),
+    displayMedium: const TextStyle(color: kLightSurface),
+    displaySmall: const TextStyle(color: kLightSurface),
+    headlineLarge: const TextStyle(color: kLightSurface),
+    headlineMedium: const TextStyle(color: kLightSurface),
+    headlineSmall: const TextStyle(color: kLightSurface),
+    titleLarge: const TextStyle(color: kLightSurface),
+    titleMedium: const TextStyle(color: kLightSurface),
+    titleSmall: const TextStyle(color: kLightSurface),
+    bodyLarge: const TextStyle(color: kLightSurface),
+    bodyMedium: const TextStyle(color: kLightSurface),
+    bodySmall: const TextStyle(color: kLightSurface),
+    labelLarge: const TextStyle(color: kLightSurface),
+    labelMedium: const TextStyle(color: kLightSurface),
+    labelSmall: const TextStyle(color: kLightSurface),
   ),
   cardTheme: const CardThemeData(
     color: Color(0xFF1E1E1E),
@@ -152,10 +167,14 @@ final ThemeData darkTheme = ThemeData(
     labelTextStyle: const WidgetStatePropertyAll(
       TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
     ),
-    
+
     iconTheme: const WidgetStatePropertyAll(
       IconThemeData(size: 24, color: Colors.white),
     ),
+  ),
+  tabBarTheme: TabBarThemeData(
+    indicatorColor: kBrandYellow,
+    labelColor: kLightSurface,
   ),
 );
 

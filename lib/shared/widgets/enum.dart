@@ -1,0 +1,1 @@
+enum MyWidgetSize { xs, s, m, l, xl }

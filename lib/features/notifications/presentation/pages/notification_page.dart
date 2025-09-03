@@ -11,11 +11,7 @@ class NotificationsPage extends StatelessWidget {
         length: 3, // Number of tabs
         child: Column(
           children: [
-            // Tab Bar
             const TabBar(
-              labelColor: Colors.black,
-              unselectedLabelColor: Colors.grey,
-              indicatorColor: Colors.blue,
               tabs: [
                 Tab(text: 'Joined'),
                 Tab(text: 'Upcoming'),
