@@ -52,18 +52,13 @@ class _WhenDataScreen extends ConsumerWidget {
             const SizedBox(height: 16),
             Center(child: const MyGradientText(text: 'Upcoming Events!')),
             MyCarousel(
-              items: List.generate(
+              models: List.generate(
                 5,
-                (index) => Card(
-                  child: Column(
-                    children: [
-                      Text('Activity ${index + 1}'),
-                      Text('Description for activity ${index + 1}'),
-                      Text(
-                        DateTime.now().add(Duration(days: index)).toString(),
-                      ),
-                    ],
-                  ),
+                (index) => MyCarouselModel(
+                  imageUrl: 'https://picsum.photos/1200/400?random=$index',
+                  onTap: () {
+                    // Handle tap
+                  },
                 ),
               ),
             ),

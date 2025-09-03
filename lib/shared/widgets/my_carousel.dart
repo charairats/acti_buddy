@@ -3,21 +3,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class MyCarouselValueNotifier extends ValueNotifier<int> {
-  MyCarouselValueNotifier() : super(0);
-
-  int get activeIndex => value;
-
-  void setActiveIndex(int index) {
-    value = index;
-    notifyListeners();
-  }
-}
-
 class MyCarousel extends StatefulWidget {
-  const MyCarousel({super.key, required this.items});
+  const MyCarousel({super.key, required this.models});
 
-  final List<Widget> items;
+  final List<MyCarouselModel> models;
 
   @override
   State<MyCarousel> createState() => _MyCarouselState();
@@ -35,15 +24,27 @@ class _MyCarouselState extends State<MyCarousel> {
       children: [
         CarouselSlider.builder(
           carouselController: carouselController,
-          itemCount: widget.items.length,
+          itemCount: widget.models.length,
           itemBuilder: (context, index, realIndex) {
-            return widget.items[index];
+            return AspectRatio(
+              aspectRatio: 21 / 9,
+              child: GestureDetector(
+                onTap: widget.models[index].onTap,
+                child: Card(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  child: Image.network(
+                    widget.models[index].imageUrl,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            );
           },
           options: CarouselOptions(
             height: 200.0,
             autoPlay: true,
             enlargeCenterPage: true,
-            viewportFraction: 0.8,
+            viewportFraction: 1,
             aspectRatio: 21 / 9,
             initialPage: 0,
             onPageChanged: (index, reason) {
@@ -56,7 +57,7 @@ class _MyCarouselState extends State<MyCarousel> {
           builder: (context, value, child) {
             return AnimatedSmoothIndicator(
               activeIndex: value,
-              count: widget.items.length,
+              count: widget.models.length,
               effect: const WormEffect(
                 dotWidth: 8,
                 dotHeight: 8,
@@ -71,4 +72,22 @@ class _MyCarouselState extends State<MyCarousel> {
       ],
     );
   }
+}
+
+class MyCarouselValueNotifier extends ValueNotifier<int> {
+  MyCarouselValueNotifier() : super(0);
+
+  int get activeIndex => value;
+
+  void setActiveIndex(int index) {
+    value = index;
+    notifyListeners();
+  }
+}
+
+class MyCarouselModel {
+  MyCarouselModel({required this.imageUrl, this.onTap});
+
+  final String imageUrl;
+  final void Function()? onTap;
 }
