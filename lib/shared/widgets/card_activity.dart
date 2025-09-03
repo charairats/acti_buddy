@@ -7,7 +7,7 @@ class ActivityCard extends StatelessWidget {
   final String time;
   final int participants;
   final int capacity;
-  final IconData icon;
+  // final IconData icon;
 
   const ActivityCard({
     super.key,
@@ -17,7 +17,7 @@ class ActivityCard extends StatelessWidget {
     required this.time,
     required this.participants,
     required this.capacity,
-    required this.icon,
+    // required this.icon,
   });
 
   @override
@@ -40,7 +40,7 @@ class ActivityCard extends StatelessWidget {
                 CircleAvatar(
                   radius: 24,
                   backgroundColor: cs.primary.withValues(alpha: 0.2),
-                  child: Icon(icon, color: cs.primary, size: 28),
+                  // child: Icon(icon, color: cs.primary, size: 28),
                 ),
                 const SizedBox(width: 12),
                 Expanded(

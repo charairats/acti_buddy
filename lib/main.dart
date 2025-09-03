@@ -1,5 +1,5 @@
 import 'package:acti_buddy/core/config/router.dart';
-import 'package:acti_buddy/core/theme/theme_data.dart';
+import 'package:acti_buddy/core/config/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,6 +21,7 @@ class ActiBuddyApp extends StatelessWidget {
       darkTheme: darkTheme,
       themeMode: ThemeMode.dark,
       routerConfig: router,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
