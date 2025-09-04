@@ -1,23 +1,41 @@
-import 'package:acti_buddy/core/core.dart';
+import 'package:acti_buddy/acti_buddy.dart';
 import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 
 class MyQuickActionButton extends StatelessWidget {
   const MyQuickActionButton({
-    super.key,
     required this.icon,
-    required this.label,
+    super.key,
+    this.label,
+    this.size = MyWidgetSize.xl,
+    this.iconColor,
   });
 
   final String icon;
-  final String label;
+  final String? label;
+  final MyWidgetSize size;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
+    final double buttonWidth = switch (size) {
+      MyWidgetSize.xs => 16.0,
+      MyWidgetSize.s => 32.0,
+      MyWidgetSize.m => 48.0,
+      MyWidgetSize.l => 72.0,
+      MyWidgetSize.xl => 96.0,
+    };
+    final double iconSize = switch (size) {
+      MyWidgetSize.xs => 8.0,
+      MyWidgetSize.s => 12.0,
+      MyWidgetSize.m => 16.0,
+      MyWidgetSize.l => 24.0,
+      MyWidgetSize.xl => 36.0,
+    };
     final cs = Theme.of(context).colorScheme;
     return SizedBox(
-      height: 128,
-      width: 128,
+      height: buttonWidth,
+      width: buttonWidth * 0.95,
       child: Card(
         margin: EdgeInsets.zero,
         color: cs.surfaceContainerLow,
@@ -28,17 +46,23 @@ class MyQuickActionButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Iconify(icon, color: cs.primary, size: 36),
-              const SizedBox(height: 8),
-              Expanded(
-                child: Center(
-                  child: Text(
-                    label,
-                    style: TextStyle(fontSize: 12, color: cs.onSurface),
-                    textAlign: TextAlign.center,
+              Iconify(icon, color: cs.primary, size: iconSize),
+
+              if (label != null) ...[
+                const SizedBox(height: 8),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      label!,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: iconColor ?? cs.onSurface,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
-              ),
+              ],
             ],
           ),
         ),

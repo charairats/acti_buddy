@@ -111,7 +111,7 @@ final ThemeData darkTheme = ThemeData(
       borderSide: BorderSide.none,
     ),
   ),
-  textTheme: GoogleFonts.latoTextTheme(),
+  textTheme: GoogleFonts.sarabunTextTheme(),
   cardTheme: const CardThemeData(
     color: Color(0xFF1E1E1E),
     elevation: 3,
@@ -119,6 +119,10 @@ final ThemeData darkTheme = ThemeData(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(16)),
     ),
+  ),
+  chipTheme: ChipThemeData(
+    backgroundColor: kDarkSurfaceContainer,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(

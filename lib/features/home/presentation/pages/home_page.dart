@@ -1,9 +1,7 @@
 // home_page.dart
 import 'package:acti_buddy/acti_buddy.dart';
-import 'package:acti_buddy/features/home/notifiers/notifiers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/bi.dart';
 
 class HomePage extends ConsumerWidget {
@@ -13,23 +11,23 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final refreshHomeAsyncValue = ref.watch(refreshHomeNotifierProvider);
 
-    // ref.listen(refreshHomeAsyncNotifierProvider, (previous, next) {
-    //   if (next is AsyncLoading) {
-    //     MyLoading.show(context);
-    //   } else {
-    //     MyLoading.hide(context);
-    //   }
-    // });
+    ref.listen(refreshHomeNotifierProvider, (previous, next) {
+      if (next is AsyncLoading) {
+        MyLoading.show(context);
+      } else {
+        MyLoading.hide(context);
+      }
+    });
 
     return refreshHomeAsyncValue.when(
       loading: () {
-        return MyLoading();
+        return SizedBox.shrink();
       },
       data: (data) {
         return const _WhenDataScreen();
       },
       error: (error, stackTrace) {
-        return SizedBox();
+        return SizedBox.shrink();
       },
     );
   }
@@ -149,7 +147,7 @@ class _UpcomingSection extends StatelessWidget {
                           index: index,
                           title:
                               'หาเพื่อนเดินป่า เทรลเขาช้างเผือก ทองผาภูมิเดือนตุลาคมนี้ครับ รับไม่เกิน 4 คน',
-                              
+
                           isFavorite: true,
                         ),
                       ),
