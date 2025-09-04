@@ -27,7 +27,7 @@ class MyQuickActionButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Iconify(icon, color: kBrandYellow, size: 36),
+              Iconify(icon, color: cs.primary, size: 36),
               const SizedBox(height: 8),
               Expanded(
                 child: Center(

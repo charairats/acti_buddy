@@ -125,6 +125,39 @@ class _UpcomingSection extends StatelessWidget {
             'Check out the latest events happening near you!',
             style: TextStyle(color: cs.onSurface),
           ),
+          const SizedBox(height: 16),
+          Stack(
+            children: [
+              Image.asset(
+                'assets/images/mountain_2.png',
+                fit: BoxFit.cover,
+                height: 176,
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
+                  child: Row(
+                    children: List.generate(
+                      5,
+                      (index) => Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: MyCardImageInfo(
+                          index: index,
+                          title:
+                              'Event $index: หาเพื่อนเดินป่า เทรลเขาช้างเผือก ทองผาภูมิเดือนตุลาคมนี้ครับ รับไม่เกิน 4 คน',
+                          isFavorite: true,
+                        ),
+                      ),
+                    ).toList(),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

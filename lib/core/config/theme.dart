@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // Brand palette (Adventure Minimal)
-const Color kBrandYellow = Color(0xFFFFD93D); // Primary
+const Color kBrandYellow = Color(0xFFF6D658); // Primary
 const Color kLightSurface = Colors.white;
 const Color kLightOnSurface = Color(0xFF111111);
 const Color kDarkSurface = Color(0xFF1C1C1C);
@@ -44,23 +44,6 @@ final ThemeData lightTheme = ThemeData(
     surfaceContainerHigh: const Color(0xFFF2F2F2),
   ),
   scaffoldBackgroundColor: kLightSurface,
-  // textTheme: GoogleFonts.playTextTheme().copyWith(
-  //   displayLarge: const TextStyle(color: kDarkSurface),
-  //   displayMedium: const TextStyle(color: kDarkSurface),
-  //   displaySmall: const TextStyle(color: kDarkSurface),
-  //   headlineLarge: const TextStyle(color: kDarkSurface),
-  //   headlineMedium: const TextStyle(color: kDarkSurface),
-  //   headlineSmall: const TextStyle(color: kDarkSurface),
-  //   titleLarge: const TextStyle(color: kDarkSurface),
-  //   titleMedium: const TextStyle(color: kDarkSurface),
-  //   titleSmall: const TextStyle(color: kDarkSurface),
-  //   bodyLarge: const TextStyle(color: kDarkSurface),
-  //   bodyMedium: const TextStyle(color: kDarkSurface),
-  //   bodySmall: const TextStyle(color: kDarkSurface),
-  //   labelLarge: const TextStyle(color: kDarkSurface),
-  //   labelMedium: const TextStyle(color: kDarkSurface),
-  //   labelSmall: const TextStyle(color: kDarkSurface),
-  // ),
   textTheme: GoogleFonts.latoTextTheme(),
   cardTheme: const CardThemeData(
     color: Colors.white,
@@ -87,7 +70,7 @@ final ThemeData lightTheme = ThemeData(
   ),
   navigationBarTheme: NavigationBarThemeData(
     backgroundColor: kLightSurface,
-    indicatorColor: kBrandYellow.withValues(alpha: 0.18),
+    indicatorColor: kBrandYellow,
     labelTextStyle: const WidgetStatePropertyAll(
       TextStyle(fontWeight: FontWeight.w600),
     ),
