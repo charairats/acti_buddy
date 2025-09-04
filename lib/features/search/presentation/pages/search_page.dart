@@ -1,6 +1,5 @@
 import 'package:acti_buddy/shared/shared.dart';
 import 'package:flutter/material.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/bi.dart';
 
 class SearchActivityPage extends StatefulWidget {
@@ -26,10 +25,7 @@ class _SearchActivityPageState extends State<SearchActivityPage> {
           const _SearchHistorySection(),
           const _TrendingHistorySection(),
           const _BrowseByCategorySection(),
-          // Text(
-          //   'แนะนำสำหรับคุณ (Recommended for You)',
-          //   style: TextStyle(color: cs.onSurface),
-          // ),
+          const _RecommendedForYouSection(),
         ],
       ),
     );
@@ -43,7 +39,7 @@ class _SearchHistorySection extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -53,11 +49,11 @@ class _SearchHistorySection extends StatelessWidget {
               context,
             ).textTheme.titleLarge?.copyWith(color: cs.onSurface),
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 8),
           const Row(
             children: [
               MyChip(label: 'เดินป่า'),
-              SizedBox(width: 8.0),
+              SizedBox(width: 8),
               MyChip(label: 'ดูหนังผี'),
             ],
           ),
@@ -74,7 +70,7 @@ class _TrendingHistorySection extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -84,13 +80,13 @@ class _TrendingHistorySection extends StatelessWidget {
               context,
             ).textTheme.titleLarge?.copyWith(color: cs.onSurface),
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 8),
           const Row(
             children: [
               MyChip(label: 'Camping'),
-              SizedBox(width: 8.0),
+              SizedBox(width: 8),
               MyChip(label: 'Badminton'),
-              SizedBox(width: 8.0),
+              SizedBox(width: 8),
               MyChip(label: 'Fitness'),
             ],
           ),
@@ -117,7 +113,7 @@ class _BrowseByCategorySection extends StatelessWidget {
               context,
             ).textTheme.titleLarge?.copyWith(color: cs.onSurface),
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 8),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
 
@@ -165,6 +161,38 @@ class _BrowseByCategorySection extends StatelessWidget {
                   // iconColor: cs.surface,
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RecommendedForYouSection extends StatelessWidget {
+  const _RecommendedForYouSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Recommended for You',
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(color: cs.onSurface),
+          ),
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: MyCardImageInfo(
+              index: 1,
+              title: 'ชวนกันมาเก็บขยะหาดชะอำ จังหวัดเพชรบุรี รีบก่อนเต็ม!',
+              isFavorite: false,
             ),
           ),
         ],
