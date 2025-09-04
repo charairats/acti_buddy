@@ -3,6 +3,7 @@ export 'enum.dart';
 export 'my_card_image_info.dart';
 export 'my_carousel.dart';
 export 'my_chip.dart';
+export 'my_choice_chip.dart';
 export 'my_gradient_text.dart';
 export 'my_loading.dart';
 export 'my_quick_action_button.dart';

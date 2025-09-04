@@ -1,3 +1,4 @@
+import 'package:acti_buddy/acti_buddy.dart';
 import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/bi.dart';
@@ -63,7 +64,7 @@ class MyCardImageInfo extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               child: Text(
                 title ?? '',
-                style: TextStyle(fontSize: 14, color: cs.onSurface),
+                style: const TextStyle(fontSize: 14, color: kLightSurface),
                 textAlign: TextAlign.left,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
