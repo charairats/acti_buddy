@@ -3,6 +3,7 @@ import 'package:acti_buddy/features/home/presentation/pages/home_page.dart';
 import 'package:acti_buddy/features/notifications/presentation/pages/notification_page.dart';
 import 'package:acti_buddy/features/profile/presentation/pages/profile_page.dart';
 import 'package:acti_buddy/features/search/presentation/pages/search_page.dart';
+import 'package:acti_buddy/features/settings/presentation/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
@@ -63,6 +64,11 @@ final GoRouter router = GoRouter(
               const NoTransitionPage(child: ProfilePage()),
         ),
       ],
+    ),
+    GoRoute(
+      path: RoutePath.settings,
+      name: RouteName.settings,
+      builder: (context, state) => const SettingsPage(),
     ),
   ],
 );

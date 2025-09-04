@@ -1,4 +1,3 @@
-export 'card_activity.dart';
 export 'enum.dart';
 export 'my_card_image_info.dart';
 export 'my_carousel.dart';

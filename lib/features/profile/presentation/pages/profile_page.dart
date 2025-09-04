@@ -1,4 +1,6 @@
+import 'package:acti_buddy/core/config/router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/bi.dart';
 
@@ -34,17 +36,18 @@ class _ProfileSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                CircleAvatar(
+                  radius: 32,
+                  backgroundImage: NetworkImage(
+                    'https://picsum.photos/200',
+                  ),
+                ),
+                SizedBox(width: 8),
                 Expanded(
                   child: Row(
                     children: [
-                      CircleAvatar(
-                        radius: 32,
-                        backgroundImage: NetworkImage(
-                          'https://picsum.photos/200',
-                        ),
-                      ),
-                      SizedBox(width: 8),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -57,7 +60,7 @@ class _ProfileSection extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'I love hiking and coffee!',
+                            'I love hiking and coffee!\nBangkok, Thailand\nLife is adventurous!',
                             style: TextStyle(color: Colors.grey),
                             maxLines: 4,
                             overflow: TextOverflow.ellipsis,
@@ -68,7 +71,9 @@ class _ProfileSection extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push(RoutePath.settings);
+                  },
                   icon: Iconify(
                     Bi.gear,
                     color: cs.onSurface,
@@ -76,7 +81,7 @@ class _ProfileSection extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
