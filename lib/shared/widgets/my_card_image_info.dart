@@ -59,7 +59,7 @@ class MyCardImageInfo extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Iconify(Bi.star_fill, color: cs.secondary, size: 16),
+                child: Iconify(Bi.star_fill, color: cs.secondary, size: 20),
               ),
             ),
           Positioned(
