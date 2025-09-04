@@ -1,27 +1,27 @@
-// ActiBuddy Themes (Flutter 3.32, Material 3)
-// ------------------------------------------------------------
-// ✅ Notes on deprecations & migrations:
-// - ColorScheme.background / onBackground are DEPRECATED in M3. Use surface & new surfaceContainer* roles instead.
-// - MaterialStateProperty is DEPRECATED typedef → use WidgetStateProperty / WidgetStatePropertyAll.
-// - Color.withOpacity is DEPRECATED → use color.withValues(alpha: ...).
-// - Component theme normalization introduced CardThemeData (replacing CardTheme in ThemeData).
-//
-// Sources:
-// - New ColorScheme roles & background/onBackground deprecation: docs.flutter.dev → breaking changes (new-color-scheme-roles)
-// - MaterialState → WidgetState rename: docs.flutter.dev → breaking changes (material-state)
-// - withOpacity deprecation & wide gamut: docs.flutter.dev → breaking changes (wide-gamut-framework)
-// - Component theme normalization & CardThemeData: docs.flutter.dev → breaking changes (component-theme-normalization)
-// ------------------------------------------------------------
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// Brand palette (Adventure Minimal)
-const Color kBrandYellow = Color(0xFFF6D658); // Primary
-const Color kLightSurface = Colors.white;
+const Color kBrandYellow = Color(0xFFF6D658);
+
+const Color kLightPrimary = kBrandYellow;
+const Color kLightOnPrimary = Color(0xFF000000);
+const Color kLightSecondary = Color(0xFF4C5D6C);
+const Color kLightOnSecondary = Color(0xFFFFFFFF);
+const Color kLightSurface = Color(0xFFFFFFFF);
 const Color kLightOnSurface = Color(0xFF111111);
-const Color kDarkSurface = Color(0xFF1C1C1C);
-const Color kDarkScaffold = Color(0xFF0D0D0D);
+const Color kLightSurfaceContainerLow = Color(0xFFF2F2F7);
+const Color kLightSurfaceContainer = Color(0xFFE5E5EA);
+const Color kLightSurfaceContainerHigh = Color(0xFFD1D1D6);
+
+const Color kDarkPrimary = kBrandYellow;
+const Color kDarkOnPrimary = Color(0xFF000000);
+const Color kDarkSecondary = kBrandYellow;
+const Color kDarkOnSecondary = Color(0xFF000000);
+const Color kDarkSurface = Color(0xFF1C1C1E);
+const Color kDarkOnSurface = Color(0xFFFFFFFF);
+const Color kDarkSurfaceContainerLow = Color(0xFF2C2C2E);
+const Color kDarkSurfaceContainer = Color(0xFF3A3A3C);
+const Color kDarkSurfaceContainerHigh = Color(0xFF48484A);
 
 // LIGHT THEME
 final ColorScheme _lightScheme = ColorScheme.fromSeed(
@@ -32,16 +32,15 @@ final ColorScheme _lightScheme = ColorScheme.fromSeed(
 final ThemeData lightTheme = ThemeData(
   useMaterial3: true,
   colorScheme: _lightScheme.copyWith(
-    primary: kBrandYellow,
-    onPrimary: Colors.black,
-    secondary: Colors.white, // white accents
-    onSecondary: Colors.black,
+    primary: kLightPrimary,
+    onPrimary: kLightOnPrimary,
+    secondary: kLightSecondary,
+    onSecondary: kLightOnSecondary,
     surface: kLightSurface,
     onSurface: kLightOnSurface,
-    // Optional: tailor tone-based containers
-    surfaceContainer: const Color(0xFFF6F6F6),
-    surfaceContainerLow: const Color(0xFFF8F8F8),
-    surfaceContainerHigh: const Color(0xFFF2F2F2),
+    surfaceContainerLow: kLightSurfaceContainerLow,
+    surfaceContainer: kLightSurfaceContainer,
+    surfaceContainerHigh: kLightSurfaceContainerHigh,
   ),
   scaffoldBackgroundColor: kLightSurface,
   textTheme: GoogleFonts.latoTextTheme(),
@@ -88,39 +87,30 @@ final ThemeData darkTheme = ThemeData(
   useMaterial3: true,
   colorScheme: _darkScheme.copyWith(
     primary: kBrandYellow,
-    onPrimary: Colors.black,
-    secondary: Colors.white,
-    onSecondary: Colors.black,
+    onPrimary: kDarkOnPrimary,
+    secondary: kDarkSecondary,
+    onSecondary: kDarkOnSecondary,
     surface: kDarkSurface,
-    onSurface: Colors.white,
-    surfaceContainer: const Color(0xFF222222),
-    surfaceContainerLow: const Color(0xFF242424),
-    surfaceContainerHigh: const Color(0xFF202020),
+    onSurface: kDarkOnSurface,
+    surfaceContainerLow: kDarkSurfaceContainerLow,
+    surfaceContainer: kDarkSurfaceContainer,
+    surfaceContainerHigh: kDarkSurfaceContainerHigh,
   ),
-  scaffoldBackgroundColor: kDarkScaffold,
-  // fontFamily: GoogleFonts.oxanium.toString(),
+  scaffoldBackgroundColor: kDarkSurface,
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.transparent,
     foregroundColor: kLightSurface,
     centerTitle: false,
   ),
-  // textTheme: GoogleFonts.sarabunTextTheme().copyWith(
-  //   displayLarge: const TextStyle(color: kLightSurface),
-  //   displayMedium: const TextStyle(color: kLightSurface),
-  //   displaySmall: const TextStyle(color: kLightSurface),
-  //   headlineLarge: const TextStyle(color: kLightSurface),
-  //   headlineMedium: const TextStyle(color: kLightSurface),
-  //   headlineSmall: const TextStyle(color: kLightSurface),
-  //   titleLarge: const TextStyle(color: kLightSurface),
-  //   titleMedium: const TextStyle(color: kLightSurface),
-  //   titleSmall: const TextStyle(color: kLightSurface),
-  //   bodyLarge: const TextStyle(color: kLightSurface),
-  //   bodyMedium: const TextStyle(color: kLightSurface),
-  //   bodySmall: const TextStyle(color: kLightSurface),
-  //   labelLarge: const TextStyle(color: kLightSurface),
-  //   labelMedium: const TextStyle(color: kLightSurface),
-  //   labelSmall: const TextStyle(color: kLightSurface),
-  // ),
+  inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    fillColor: kDarkSurfaceContainer,
+    iconColor: kDarkOnSurface,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide.none,
+    ),
+  ),
   textTheme: GoogleFonts.latoTextTheme(),
   cardTheme: const CardThemeData(
     color: Color(0xFF1E1E1E),

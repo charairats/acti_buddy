@@ -20,6 +20,7 @@ class MyQuickActionButton extends StatelessWidget {
       width: 128,
       child: Card(
         margin: EdgeInsets.zero,
+        color: cs.surfaceContainerLow,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),

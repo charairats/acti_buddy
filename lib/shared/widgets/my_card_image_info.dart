@@ -51,7 +51,7 @@ class MyCardImageInfo extends StatelessWidget {
                   shape: BoxShape.circle, // Make it a circle
                   color: cs.primary,
                 ),
-                child: Iconify(Bi.star_fill, color: cs.secondary, size: 20),
+                child: Iconify(Bi.star_fill, color: cs.onSurface, size: 20),
               ),
             ),
           Positioned(
@@ -61,14 +61,12 @@ class MyCardImageInfo extends StatelessWidget {
             child: Container(
               color: cs.onPrimary.withAlpha(100),
               padding: const EdgeInsets.all(8),
-              child: Expanded(
-                child: Text(
-                  title ?? '',
-                  style: TextStyle(fontSize: 14, color: cs.secondary),
-                  textAlign: TextAlign.left,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ),
+              child: Text(
+                title ?? '',
+                style: TextStyle(fontSize: 14, color: cs.onSurface),
+                textAlign: TextAlign.left,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ),
