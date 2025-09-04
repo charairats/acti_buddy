@@ -44,13 +44,22 @@ class MyCardImageInfo extends StatelessWidget {
             Positioned(
               top: 0,
               right: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  backgroundColor: cs.primary,
-                  radius: 16,
-                  child: Iconify(Bi.star_fill, color: cs.secondary, size: 20),
+              child: Container(
+                margin: const EdgeInsets.all(8),
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle, // Make it a circle
+                  color: cs.primary,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withAlpha(80),
+                      spreadRadius: 2,
+                      blurRadius: 4,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
                 ),
+                child: Iconify(Bi.star_fill, color: cs.secondary, size: 16),
               ),
             ),
           Positioned(
@@ -63,7 +72,7 @@ class MyCardImageInfo extends StatelessWidget {
               child: Expanded(
                 child: Text(
                   title ?? '',
-                  style: TextStyle(fontSize: 14, color: cs.onSurface),
+                  style: TextStyle(fontSize: 14, color: cs.secondary),
                   textAlign: TextAlign.center,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
