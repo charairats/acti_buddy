@@ -148,7 +148,8 @@ class _UpcomingSection extends StatelessWidget {
                         child: MyCardImageInfo(
                           index: index,
                           title:
-                              'Event $index: หาเพื่อนเดินป่า เทรลเขาช้างเผือก ทองผาภูมิเดือนตุลาคมนี้ครับ รับไม่เกิน 4 คน',
+                              'หาเพื่อนเดินป่า เทรลเขาช้างเผือก ทองผาภูมิเดือนตุลาคมนี้ครับ รับไม่เกิน 4 คน',
+                              
                           isFavorite: true,
                         ),
                       ),

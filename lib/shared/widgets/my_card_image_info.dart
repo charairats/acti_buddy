@@ -43,21 +43,13 @@ class MyCardImageInfo extends StatelessWidget {
           if (isFavorite)
             Positioned(
               top: 0,
-              right: 0,
+              left: 0,
               child: Container(
-                margin: const EdgeInsets.all(8),
-                padding: EdgeInsets.all(8),
+                margin: const EdgeInsets.all(4),
+                padding: EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle, // Make it a circle
                   color: cs.primary,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withAlpha(80),
-                      spreadRadius: 2,
-                      blurRadius: 4,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
                 ),
                 child: Iconify(Bi.star_fill, color: cs.secondary, size: 20),
               ),
@@ -73,7 +65,7 @@ class MyCardImageInfo extends StatelessWidget {
                 child: Text(
                   title ?? '',
                   style: TextStyle(fontSize: 14, color: cs.secondary),
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.left,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                 ),
