@@ -2,6 +2,7 @@ import 'package:acti_buddy/acti_buddy.dart';
 import 'package:colorful_iconify_flutter/icons/logos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/bi.dart';
 
@@ -16,7 +17,7 @@ class SignInPage extends ConsumerWidget {
         child: Center(
           child: ListView(
             shrinkWrap: true,
-            physics: ClampingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             padding: const EdgeInsets.all(16),
             children: [
               Image.asset(
@@ -24,8 +25,7 @@ class SignInPage extends ConsumerWidget {
                 width: 128,
                 height: 128,
               ),
-              Align(
-                alignment: Alignment.center,
+              Center(
                 child: Text(
                   'Sign in to ActiBuddy',
                   style: Theme.of(
@@ -34,8 +34,7 @@ class SignInPage extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              Align(
-                alignment: Alignment.center,
+              Center(
                 child: Text(
                   'Sign in to join or create activities',
                   style: Theme.of(
@@ -68,8 +67,7 @@ class SignInPage extends ConsumerWidget {
                 },
               ),
               const SizedBox(height: 16),
-              Align(
-                alignment: Alignment.center,
+              Center(
                 child: Text(
                   'By continuing, you agree to our Terms and acknowledge that you have read our Privacy Policy.',
                   style: Theme.of(
