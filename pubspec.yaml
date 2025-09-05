@@ -43,17 +43,25 @@ dependencies:
   carousel_slider: ^5.1.1
   smooth_page_indicator: ^1.2.1
   very_good_analysis: ^9.0.0
+  introduction_screen: ^4.0.0
+  shared_preferences: ^2.5.3
+  objectbox: ^4.3.1
+  objectbox_flutter_libs: any
+  path: ^1.9.1
+  path_provider: ^2.1.5
+  firebase_core: ^4.1.0
+  firebase_auth: ^6.0.2
+
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^5.0.0
+  build_runner: ^2.7.1
+  objectbox_generator: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
