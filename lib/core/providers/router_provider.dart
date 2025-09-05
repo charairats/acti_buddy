@@ -1,5 +1,4 @@
 import 'package:acti_buddy/acti_buddy.dart';
-import 'package:acti_buddy/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 

@@ -1,12 +1,14 @@
+import 'package:acti_buddy/acti_buddy.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/bi.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),
@@ -47,8 +49,11 @@ class SettingsPage extends StatelessWidget {
             onTap: () {},
           ),
           const SizedBox(height: 16),
+          // Sign Out Button
           ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              ref.read(googleSignInProvider.notifier).signOut();
+            },
             icon: Iconify(Bi.box_arrow_right, color: cs.onSurface),
             label: const Text('Sign Out'),
             style: ElevatedButton.styleFrom(

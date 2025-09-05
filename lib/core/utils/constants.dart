@@ -9,3 +9,11 @@ class AssetsImage {
   static const String continueWithGoogle = 'assets/images/google_ctn.png';
   static const String google = 'assets/images/google.svg';
 }
+
+class FireStoreCollection {
+  static const String users = 'users';
+  static const String profile = 'profile';
+  static const String activities = 'activities';
+  static const String chats = 'chats';
+  static const String messages = 'messages';
+}

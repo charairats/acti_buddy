@@ -47,4 +47,24 @@ class GoogleSignInNotifier extends AsyncNotifier<User?> {
       debugPrintStack(stackTrace: st);
     }
   }
+
+  Future<void> signOut() async {
+    state = const AsyncValue.loading();
+    try {
+      // Sign out from Firebase
+      await FirebaseAuth.instance.signOut();
+      // Sign out from Google as well
+      await GoogleSignIn.instance.signOut();
+
+      debugPrint(
+        'GoogleSignInNotifier: User signed out from Google and Firebase successfully.',
+      );
+
+      state = const AsyncValue.data(null);
+    } catch (e, st) {
+      state = AsyncValue.error(e, StackTrace.current);
+      debugPrint(e.toString());
+      debugPrintStack(stackTrace: st);
+    }
+  }
 }
