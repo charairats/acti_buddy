@@ -12,6 +12,17 @@ class SignInPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
+    final googleSignInAsyncValue = ref.watch(googleSignInProvider);
+
+    ref.listen(googleSignInProvider, (previous, next) {
+      if (next is AsyncLoading) {
+        MyLoading.show(context);
+      } else if (next is AsyncData) {
+        MyLoading.hide(context);
+        context.go(RoutePath.home);
+      }
+    });
+
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -47,7 +58,7 @@ class SignInPage extends ConsumerWidget {
                 icon: Logos.google_icon,
                 label: 'Continue with Google',
                 onPressed: () {
-                  // Handle sign-in logic
+                  ref.read(googleSignInProvider.notifier).signInWithGoogle();
                 },
               ),
               const SizedBox(height: 16),
