@@ -1,4 +1,5 @@
 import 'package:acti_buddy/acti_buddy.dart';
+import 'package:acti_buddy/core/ui/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 
@@ -46,8 +47,7 @@ class MyQuickActionButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Iconify(icon, color: cs.primary, size: iconSize),
-
+              Iconify(iconFromName(icon), color: cs.primary, size: iconSize),
               if (label != null) ...[
                 const SizedBox(height: 8),
                 Expanded(

@@ -1,5 +1,7 @@
+import 'package:acti_buddy/acti_buddy.dart';
 import 'package:acti_buddy/shared/shared.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconify_flutter/icons/bi.dart';
 
 class SearchActivityPage extends StatefulWidget {
@@ -96,75 +98,49 @@ class _TrendingHistorySection extends StatelessWidget {
   }
 }
 
-class _BrowseByCategorySection extends StatelessWidget {
+class _BrowseByCategorySection extends ConsumerWidget {
   const _BrowseByCategorySection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activityCategoriesAsyncValue = ref.watch(browseByCategoriesProvider);
     final cs = Theme.of(context).colorScheme;
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Browse by Categories',
-            style: Theme.of(
-              context,
-            ).textTheme.titleLarge?.copyWith(color: cs.onSurface),
-          ),
-          const SizedBox(height: 8),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
 
-            child: Row(
-              children: [
-                MyQuickActionButton(
-                  icon: Bi.bicycle,
-                  label: 'Sports & Outdoors',
-                  // iconColor: cs.onSurface,
-                ),
-                const SizedBox(width: 8),
-                MyQuickActionButton(
-                  icon: Bi.cup_hot,
-                  label: 'Food & Drinks',
-                  // iconColor: cs.surface,
-                ),
-                const SizedBox(width: 8),
-                MyQuickActionButton(
-                  icon: Bi.dpad,
-                  label: 'Entertain. & Recreation',
-                  // iconColor: cs.surface,
-                ),
-                const SizedBox(width: 8),
-                MyQuickActionButton(
-                  icon: Bi.yin_yang,
-                  label: 'Arts & Culture',
-                  // iconColor: cs.surface,
-                ),
-                const SizedBox(width: 8),
-                MyQuickActionButton(
-                  icon: Bi.train_lightrail_front,
-                  label: 'Travel & Tourism',
-                  // iconColor: cs.surface,
-                ),
-                const SizedBox(width: 8),
-                MyQuickActionButton(
-                  icon: Bi.book,
-                  label: 'Learning & Self-Improve.',
-                  // iconColor: cs.surface,
-                ),
-                const SizedBox(width: 8),
-                MyQuickActionButton(
-                  icon: Bi.heart,
-                  label: 'Volunteering & Social',
-                  // iconColor: cs.surface,
-                ),
-              ],
+    return activityCategoriesAsyncValue.when(
+      data: (categories) => Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Browse by Categories',
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(color: cs.onSurface),
             ),
-          ),
-        ],
+            const SizedBox(height: 8),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: categories
+                    .map(
+                      (category) => Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: MyQuickActionButton(
+                          icon: category.iconName,
+                          label: category.nameEnglish,
+                          // iconColor: cs.onSurface,
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          ],
+        ),
       ),
+      loading: () => const SizedBox.shrink(),
+      error: (error, stack) => Center(child: Text('Error: $error')),
     );
   }
 }
