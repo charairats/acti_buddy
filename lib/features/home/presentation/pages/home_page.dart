@@ -45,7 +45,7 @@ class _WhenDataScreen extends ConsumerWidget {
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {
-          refreshHomeAsyncNotifier.refresh();
+          await refreshHomeAsyncNotifier.refresh();
         },
         child: ListView(
           children: [
@@ -100,10 +100,10 @@ class _QuickActionsSection extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.all(8),
       children: [
-        MyQuickActionButton(icon: Bi.dribbble, label: 'Create an Activity'),
-        MyQuickActionButton(icon: Bi.calendar_heart, label: 'My Activities'),
-        MyQuickActionButton(icon: Bi.geo_alt, label: 'Activities Nearby'),
-        MyQuickActionButton(icon: Bi.person, label: 'Report Abuse'),
+        MyQuickActionButton(icon: 'Bi.dribbble', label: 'Create an Activity'),
+        MyQuickActionButton(icon: 'Bi.calendar_heart', label: 'My Activities'),
+        MyQuickActionButton(icon: 'Bi.geo_alt', label: 'Activities Nearby'),
+        MyQuickActionButton(icon: 'Bi.person', label: 'Report Abuse'),
       ],
     );
   }
