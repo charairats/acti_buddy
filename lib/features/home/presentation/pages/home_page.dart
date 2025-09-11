@@ -2,7 +2,7 @@
 import 'package:acti_buddy/acti_buddy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iconify_flutter/icons/bi.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -98,9 +98,15 @@ class _QuickActionsSection extends StatelessWidget {
       crossAxisSpacing: 4,
       childAspectRatio: 0.95,
       physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       children: [
-        MyQuickActionButton(icon: 'Bi.dribbble', label: 'Create an Activity'),
+        MyQuickActionButton(
+          icon: 'Bi.dribbble',
+          label: 'Create an Activity',
+          onTap: () {
+            context.push(RoutePath.createActivity);
+          },
+        ),
         MyQuickActionButton(icon: 'Bi.calendar_heart', label: 'My Activities'),
         MyQuickActionButton(icon: 'Bi.geo_alt', label: 'Activities Nearby'),
         MyQuickActionButton(icon: 'Bi.person', label: 'Report Abuse'),

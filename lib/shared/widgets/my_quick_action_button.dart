@@ -10,12 +10,14 @@ class MyQuickActionButton extends StatelessWidget {
     this.label,
     this.size = MyWidgetSize.xl,
     this.iconColor,
+    this.onTap,
   });
 
   final String icon;
   final String? label;
   final MyWidgetSize size;
   final Color? iconColor;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -34,36 +36,39 @@ class MyQuickActionButton extends StatelessWidget {
       MyWidgetSize.xl => 36.0,
     };
     final cs = Theme.of(context).colorScheme;
-    return SizedBox(
-      height: buttonWidth,
-      width: buttonWidth * 0.95,
-      child: Card(
-        margin: EdgeInsets.zero,
-        color: cs.surfaceContainerLow,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Iconify(iconFromName(icon), color: cs.primary, size: iconSize),
-              if (label != null) ...[
-                const SizedBox(height: 8),
-                Expanded(
-                  child: Center(
-                    child: Text(
-                      label!,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: iconColor ?? cs.onSurface,
+    return InkWell(
+      onTap: onTap,
+      child: SizedBox(
+        height: buttonWidth,
+        width: buttonWidth * 0.95,
+        child: Card(
+          margin: EdgeInsets.zero,
+          color: cs.surfaceContainerLow,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Iconify(iconFromName(icon), color: cs.primary, size: iconSize),
+                if (label != null) ...[
+                  const SizedBox(height: 8),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        label!,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: iconColor ?? cs.onSurface,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
-                ),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),

@@ -6,42 +6,73 @@ import 'package:flutter/material.dart';
 class ActivityModel {
   const ActivityModel({
     required this.id,
-    required this.title,
+    required this.name,
     required this.description,
-    required this.date,
-    required this.hostId,
-    required this.maxParticipants,
-    this.isCompleted = false,
+    required this.startDate,
+    required this.endDate,
+    required this.createdBy,
+    required this.participants,
+    this.cancelledAt,
+    this.deletedAt,
+    this.finishedAt,
+    this.updatedAt,
+    this.location,
   });
 
   // Factory constructor from Firestore Document
   factory ActivityModel.fromDocument(DocumentSnapshot doc) {
     return ActivityModel(
       id: doc.id,
-      title: doc['title'] as String,
+      name: doc['name'] as String,
       description: doc['description'] as String,
-      date: (doc['date'] as Timestamp).toDate(),
-      hostId: doc['userId'] as String,
-      maxParticipants: doc['maxParticipants'] as int,
-      isCompleted: doc['isCompleted'] as bool,
+      startDate: (doc['startDate'] as Timestamp).toDate(),
+      endDate: (doc['endDate'] as Timestamp).toDate(),
+      createdBy: doc['createdBy'] as String,
+      participants: doc['participants'] as int,
+      cancelledAt: doc['cancelledAt'] != null
+          ? (doc['cancelledAt'] as Timestamp).toDate()
+          : null,
+      deletedAt: doc['deletedAt'] != null
+          ? (doc['deletedAt'] as Timestamp).toDate()
+          : null,
+      finishedAt: doc['finishedAt'] != null
+          ? (doc['finishedAt'] as Timestamp).toDate()
+          : null,
+      updatedAt: doc['updatedAt'] != null
+          ? (doc['updatedAt'] as Timestamp).toDate()
+          : null,
+      location: doc['location'] as GeoPoint?,
     );
   }
+
   final String id;
-  final String title;
+  final String name;
   final String description;
-  final DateTime date;
-  final String hostId;
-  final int maxParticipants;
-  final bool isCompleted;
+  final DateTime startDate;
+  final DateTime endDate;
+  final DateTime? cancelledAt;
+  final DateTime? deletedAt;
+  final DateTime? finishedAt;
+  final DateTime? updatedAt;
+  final String createdBy;
+  final int participants;
+  final GeoPoint? location;
 
   Map<String, dynamic> toDocument() {
     return {
-      'title': title,
+      'name': name,
       'description': description,
-      'date': Timestamp.fromDate(date),
-      'hostId': hostId,
-      'maxParticipants': maxParticipants,
-      'isCompleted': isCompleted,
+      'startDate': Timestamp.fromDate(startDate),
+      'endDate': Timestamp.fromDate(endDate),
+      'createdBy': createdBy,
+      'participants': participants,
+      'cancelledAt': cancelledAt != null
+          ? Timestamp.fromDate(cancelledAt!)
+          : null,
+      'deletedAt': deletedAt != null ? Timestamp.fromDate(deletedAt!) : null,
+      'finishedAt': finishedAt != null ? Timestamp.fromDate(finishedAt!) : null,
+      'updatedAt': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
+      'location': location,
     };
   }
 }

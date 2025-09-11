@@ -13,7 +13,7 @@ class AssetsImage {
 class FireStoreCollection {
   static const String users = 'users';
   static const String profile = 'profile';
-  static const String activities = 'activities';
+  static const String activities = 'activity';
   static const String activityCategory = 'activity_category';
   static const String chats = 'chats';
   static const String messages = 'messages';

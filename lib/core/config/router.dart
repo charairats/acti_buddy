@@ -13,6 +13,7 @@ class RouteName {
   static const profile = 'profile';
   static const settings = 'settings';
   static const signIn = 'sign_in';
+  static const createActivity = 'create_activity';
 }
 
 class RoutePath {
@@ -23,58 +24,64 @@ class RoutePath {
   static const profile = '/profile';
   static const settings = '/settings';
   static const signIn = '/sign-in';
+  static const createActivity = '/create-activity';
 }
 
 class RouteConfig {
-  static final  List<RouteBase> router= [
-      ShellRoute(
-        builder: (context, state, child) {
-          Future.microtask(FlutterNativeSplash.remove);
-          return _ScaffoldShell(child: child);
-        },
-        routes: [
-          GoRoute(
-            path: RoutePath.home,
-            name: RouteName.home,
-            pageBuilder: (context, state) =>
-                const NoTransitionPage(child: HomePage()),
-          ),
-          GoRoute(
-            path: RoutePath.search,
-            name: RouteName.search,
-            pageBuilder: (context, state) =>
-                const NoTransitionPage(child: SearchActivityPage()),
-          ),
-          GoRoute(
-            path: RoutePath.notifications,
-            name: RouteName.notifications,
-            pageBuilder: (context, state) =>
-                const NoTransitionPage(child: NotificationsPage()),
-          ),
-          GoRoute(
-            path: RoutePath.profile,
-            name: RouteName.profile,
-            pageBuilder: (context, state) =>
-                const NoTransitionPage(child: ProfilePage()),
-          ),
-        ],
-      ),
-      GoRoute(
-        path: RoutePath.splash,
-        name: RouteName.splash,
-        builder: (context, state) => const SplashPage(),
-      ),
-      GoRoute(
-        path: RoutePath.signIn,
-        name: RouteName.signIn,
-        builder: (context, state) => const SignInPage(),
-      ),
-      GoRoute(
-        path: RoutePath.settings,
-        name: RouteName.settings,
-        builder: (context, state) => const SettingsPage(),
-      ),
-    ];
+  static final List<RouteBase> router = [
+    ShellRoute(
+      builder: (context, state, child) {
+        Future.microtask(FlutterNativeSplash.remove);
+        return _ScaffoldShell(child: child);
+      },
+      routes: [
+        GoRoute(
+          path: RoutePath.home,
+          name: RouteName.home,
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: HomePage()),
+        ),
+        GoRoute(
+          path: RoutePath.search,
+          name: RouteName.search,
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: SearchActivityPage()),
+        ),
+        GoRoute(
+          path: RoutePath.notifications,
+          name: RouteName.notifications,
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: NotificationsPage()),
+        ),
+        GoRoute(
+          path: RoutePath.profile,
+          name: RouteName.profile,
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: ProfilePage()),
+        ),
+      ],
+    ),
+    GoRoute(
+      path: RoutePath.splash,
+      name: RouteName.splash,
+      builder: (context, state) => const SplashPage(),
+    ),
+    GoRoute(
+      path: RoutePath.signIn,
+      name: RouteName.signIn,
+      builder: (context, state) => const SignInPage(),
+    ),
+    GoRoute(
+      path: RoutePath.settings,
+      name: RouteName.settings,
+      builder: (context, state) => const SettingsPage(),
+    ),
+    GoRoute(
+      path: RoutePath.createActivity,
+      name: RouteName.createActivity,
+      builder: (context, state) => const CreateActivityPage(),
+    ),
+  ];
 }
 
 class _ScaffoldShell extends StatefulWidget {

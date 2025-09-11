@@ -67,13 +67,13 @@ final ThemeData lightTheme = ThemeData(
       ),
     ),
   ),
-  navigationBarTheme: NavigationBarThemeData(
+  navigationBarTheme: const NavigationBarThemeData(
     backgroundColor: kLightSurface,
     indicatorColor: kBrandYellow,
-    labelTextStyle: const WidgetStatePropertyAll(
+    labelTextStyle: WidgetStatePropertyAll(
       TextStyle(fontWeight: FontWeight.w600),
     ),
-    iconTheme: const WidgetStatePropertyAll(IconThemeData(size: 24)),
+    iconTheme: WidgetStatePropertyAll(IconThemeData(size: 24)),
   ),
 );
 
@@ -97,7 +97,7 @@ final ThemeData darkTheme = ThemeData(
     surfaceContainerHigh: kDarkSurfaceContainerHigh,
   ),
   scaffoldBackgroundColor: kDarkSurface,
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     backgroundColor: Colors.transparent,
     foregroundColor: kLightSurface,
     centerTitle: false,
@@ -105,11 +105,17 @@ final ThemeData darkTheme = ThemeData(
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
     fillColor: kDarkSurfaceContainer,
+    floatingLabelBehavior: FloatingLabelBehavior.always,
     iconColor: kDarkOnSurface,
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide.none,
     ),
+    prefixIconColor: kDarkOnSurface.withAlpha(100),
+    floatingLabelStyle: TextStyle(color: kDarkOnSurface, fontSize: 20),
+    labelStyle: const TextStyle(color: kDarkOnSurface, fontSize: 16),
+    hintStyle: TextStyle(color: kDarkOnSurface.withAlpha(100)),
+    errorStyle: const TextStyle(color: Colors.red, fontSize: 14),
   ),
   textTheme: GoogleFonts.sarabunTextTheme(),
   cardTheme: const CardThemeData(
@@ -139,19 +145,19 @@ final ThemeData darkTheme = ThemeData(
       ),
     ),
   ),
-  navigationBarTheme: NavigationBarThemeData(
+  navigationBarTheme: const NavigationBarThemeData(
     backgroundColor: kDarkSurface,
     // indicatorColor: kBrandYellow.withValues(alpha: 0.22),
     indicatorColor: kBrandYellow,
-    labelTextStyle: const WidgetStatePropertyAll(
+    labelTextStyle: WidgetStatePropertyAll(
       TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
     ),
 
-    iconTheme: const WidgetStatePropertyAll(
+    iconTheme: WidgetStatePropertyAll(
       IconThemeData(size: 24, color: Colors.white),
     ),
   ),
-  tabBarTheme: TabBarThemeData(
+  tabBarTheme: const TabBarThemeData(
     indicatorColor: kBrandYellow,
     labelColor: kLightSurface,
   ),
