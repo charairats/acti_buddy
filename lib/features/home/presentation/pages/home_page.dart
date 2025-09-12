@@ -114,7 +114,7 @@ class _QuickActionsSection extends StatelessWidget {
           icon: 'Bi.person_plus',
           label: 'Join an Activity',
           onTap: () {
-            // context.push(RoutePath.findFriends);
+            context.push(RoutePath.browseActivity);
           },
         ),
         MyQuickActionButton(

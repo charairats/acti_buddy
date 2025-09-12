@@ -14,6 +14,9 @@ class ActivityModel {
     required this.createdBy,
     required this.participants,
     this.categoryId,
+    this.currentParticipants = 0,
+    this.joinCount = 0,
+    this.viewCount = 0,
     this.cancelledAt,
     this.deletedAt,
     this.finishedAt,
@@ -23,28 +26,30 @@ class ActivityModel {
 
   // Factory constructor from Firestore Document
   factory ActivityModel.fromDocument(DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>?;
+
+    T getValue<T>(String key, T defaultValue) {
+      if (data != null && data.containsKey(key)) {
+        return data[key] as T;
+      }
+      return defaultValue;
+    }
+
     return ActivityModel(
       id: doc.id,
-      name: doc['name'] as String,
-      description: doc['description'] as String,
-      startDate: (doc['startDate'] as Timestamp).toDate(),
-      endDate: (doc['endDate'] as Timestamp).toDate(),
-      createdBy: doc['createdBy'] as String,
-      participants: doc['participants'] as int,
-      categoryId: doc['categoryId'] as String?,
-      cancelledAt: doc['cancelledAt'] != null
-          ? (doc['cancelledAt'] as Timestamp).toDate()
-          : null,
-      deletedAt: doc['deletedAt'] != null
-          ? (doc['deletedAt'] as Timestamp).toDate()
-          : null,
-      finishedAt: doc['finishedAt'] != null
-          ? (doc['finishedAt'] as Timestamp).toDate()
-          : null,
-      updatedAt: doc['updatedAt'] != null
-          ? (doc['updatedAt'] as Timestamp).toDate()
-          : null,
-      location: doc['location'] as GeoPoint?,
+      name: getValue<String>('name', ''),
+      description: getValue<String>('description', ''),
+      startDate: getValue<Timestamp>('startDate', Timestamp.now()).toDate(),
+      endDate: getValue<Timestamp>('endDate', Timestamp.now()).toDate(),
+      createdBy: getValue<String>('createdBy', ''),
+      participants: getValue<int>('participants', 0),
+      categoryId: getValue<String?>('categoryId', null),
+      currentParticipants: getValue<int>('currentParticipants', 0),
+      cancelledAt: getValue<Timestamp?>('cancelledAt', null)?.toDate(),
+      deletedAt: getValue<Timestamp?>('deletedAt', null)?.toDate(),
+      finishedAt: getValue<Timestamp?>('finishedAt', null)?.toDate(),
+      updatedAt: getValue<Timestamp?>('updatedAt', null)?.toDate(),
+      location: getValue<GeoPoint?>('location', null),
     );
   }
 
@@ -60,6 +65,9 @@ class ActivityModel {
   final String createdBy;
   final int participants;
   final String? categoryId;
+  final int currentParticipants;
+  final int joinCount;
+  final int viewCount;
   final GeoPoint? location;
 
   Map<String, dynamic> toDocument() {
@@ -71,6 +79,9 @@ class ActivityModel {
       'createdBy': createdBy,
       'participants': participants,
       'categoryId': categoryId,
+      'currentParticipants': currentParticipants,
+      'joinCount': joinCount,
+      'viewCount': viewCount,
       'cancelledAt': cancelledAt != null
           ? Timestamp.fromDate(cancelledAt!)
           : null,
@@ -91,6 +102,9 @@ class ActivityModel {
       createdBy: createdBy,
       participants: participants,
       categoryId: categoryId,
+      currentParticipants: currentParticipants,
+      joinCount: joinCount,
+      viewCount: viewCount,
       cancelledAt: cancelledAt,
       deletedAt: deletedAt,
       finishedAt: finishedAt,

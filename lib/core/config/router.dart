@@ -15,6 +15,7 @@ class RouteName {
   static const signIn = 'sign_in';
   static const createActivity = 'create_activity';
   static const myActivity = 'my_activity';
+  static const browseActivity = 'browse_activity';
 }
 
 class RoutePath {
@@ -27,6 +28,7 @@ class RoutePath {
   static const signIn = '/sign-in';
   static const createActivity = '/create-activity';
   static const myActivity = '/my-activity';
+  static const browseActivity = '/browse-activity';
 }
 
 class RouteConfig {
@@ -87,6 +89,11 @@ class RouteConfig {
       path: RoutePath.myActivity,
       name: RouteName.myActivity,
       builder: (context, state) => const MyActivitiesPage(),
+    ),
+    GoRoute(
+      path: RoutePath.browseActivity,
+      name: RouteName.browseActivity,
+      builder: (context, state) => const BrowseActivitiesPage(),
     ),
   ];
 }

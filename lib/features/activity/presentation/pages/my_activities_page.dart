@@ -1,5 +1,6 @@
 import 'package:acti_buddy/acti_buddy.dart';
 import 'package:acti_buddy/features/activity/domain/entities/activity_entity.dart';
+import 'package:acti_buddy/features/activity/presentation/pages/browse_activities_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
@@ -74,13 +75,46 @@ class _MyActivitiesPageState extends ConsumerState<MyActivitiesPage>
           onRetry: () => ref.refresh(myActivitiesProvider),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (context) => const CreateActivityPage(),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _showActivityOptions(),
+        icon: const Icon(Icons.add),
+        label: const Text('Activities'),
+      ),
+    );
+  }
+
+  void _showActivityOptions() {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (context) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: const Icon(Icons.add),
+            title: const Text('Create Activity'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (context) => const CreateActivityPage(),
+                ),
+              );
+            },
           ),
-        ),
-        child: const Icon(Icons.add),
+          ListTile(
+            leading: const Icon(Icons.search),
+            title: const Text('Browse Activities'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (context) => const BrowseActivitiesPage(),
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 16),
+        ],
       ),
     );
   }
