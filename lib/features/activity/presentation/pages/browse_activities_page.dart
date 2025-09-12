@@ -2,15 +2,13 @@ import 'package:acti_buddy/acti_buddy.dart';
 import 'package:acti_buddy/core/ui/icons.dart';
 import 'package:acti_buddy/features/activity/data/repositories/browse_activity_repository_impl.dart';
 import 'package:acti_buddy/features/activity/domain/entities/activity_entity.dart';
+import 'package:acti_buddy/features/activity/presentation/pages/activity_detail_page.dart';
 import 'package:acti_buddy/features/activity/presentation/providers/activity_participant_provider.dart';
 import 'package:acti_buddy/features/activity/presentation/providers/browse_activities_provider.dart';
 import 'package:acti_buddy/features/search/presentation/providers/browse_by_categories_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/bi.dart';
-import 'package:iconify_flutter/icons/ph.dart';
 import 'package:intl/intl.dart';
 
 class BrowseActivitiesPage extends ConsumerStatefulWidget {
@@ -528,110 +526,11 @@ class _BrowseActivitiesPageState extends ConsumerState<BrowseActivitiesPage> {
   }
 
   void _showActivityDetails(ActivityEntity activity) {
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => ActivityDetailsBottomSheet(activity: activity),
-    );
-  }
-}
-
-class ActivityDetailsBottomSheet extends ConsumerWidget {
-  const ActivityDetailsBottomSheet({
-    super.key,
-    required this.activity,
-  });
-
-  final ActivityEntity activity;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return DraggableScrollableSheet(
-      initialChildSize: 0.7,
-      maxChildSize: 0.9,
-      minChildSize: 0.5,
-      builder: (context, scrollController) {
-        return Container(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Handle
-              Center(
-                child: Container(
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              // Title
-              Text(
-                activity.name,
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16),
-              // Details
-              Expanded(
-                child: ListView(
-                  controller: scrollController,
-                  children: [
-                    _buildDetailRow('Description', activity.description),
-                    const SizedBox(height: 16),
-                    _buildDetailRow(
-                      'Start Time',
-                      DateFormat(
-                        'MMM dd, yyyy - HH:mm',
-                      ).format(activity.startDate),
-                    ),
-                    const SizedBox(height: 16),
-                    _buildDetailRow(
-                      'End Time',
-                      DateFormat(
-                        'MMM dd, yyyy - HH:mm',
-                      ).format(activity.endDate),
-                    ),
-                    const SizedBox(height: 16),
-                    _buildDetailRow(
-                      'Participants',
-                      '${activity.currentParticipants} / ${activity.participants}',
-                    ),
-                    const SizedBox(height: 16),
-                    _buildDetailRow('Total Joins', '${activity.joinCount}'),
-                    const SizedBox(height: 16),
-                    _buildDetailRow('Views', '${activity.viewCount}'),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildDetailRow(String label, String value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: const TextStyle(fontSize: 16),
-        ),
-      ],
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (context) => ActivityDetailPage(activity: activity),
+      ),
     );
   }
 }

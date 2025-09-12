@@ -1,6 +1,7 @@
 import 'package:acti_buddy/acti_buddy.dart';
 import 'package:acti_buddy/features/activity/domain/entities/activity_entity.dart';
 import 'package:acti_buddy/features/activity/presentation/pages/browse_activities_page.dart';
+import 'package:acti_buddy/features/activity/presentation/pages/activity_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
@@ -210,9 +211,10 @@ class _MyActivitiesPageState extends ConsumerState<MyActivitiesPage>
   }
 
   void showActivityDetails(ActivityEntity activity) {
-    showDialog<void>(
-      context: context,
-      builder: (context) => ActivityDetailDialog(activity: activity),
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (context) => ActivityDetailPage(activity: activity),
+      ),
     );
   }
 }
