@@ -380,19 +380,14 @@ class ActivityCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      activity.name,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: cs.onPrimaryContainer,
-                      ),
-                    ),
-                  ),
-                  ActivityStatusChip(activity: activity),
-                ],
+              Text(
+                activity.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: cs.onPrimaryContainer,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
