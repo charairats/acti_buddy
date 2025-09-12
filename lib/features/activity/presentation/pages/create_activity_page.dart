@@ -65,11 +65,10 @@ class _CreateActivityPageState extends ConsumerState<CreateActivityPage> {
           );
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Activity created successfully.'),
-          ),
-        );
+        const MyToast(
+          type: MyToastType.success,
+          message: 'Activity created successfully.',
+        ).show(context);
         Navigator.of(context).pop();
       }
     } catch (e) {

@@ -3,6 +3,8 @@ import 'package:acti_buddy/acti_buddy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/bi.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -107,7 +109,16 @@ class _QuickActionsSection extends StatelessWidget {
             context.push(RoutePath.createActivity);
           },
         ),
-        MyQuickActionButton(icon: 'Bi.calendar_heart', label: 'My Activities'),
+        MyQuickActionButton(
+          icon: 'Bi.calendar_heart',
+          label: 'My Activities',
+          onTap: () {
+            const MyToast(
+              type: MyToastType.success,
+              message: 'Activity created successfully.',
+            ).show(context);
+          },
+        ),
         MyQuickActionButton(icon: 'Bi.geo_alt', label: 'Activities Nearby'),
         MyQuickActionButton(icon: 'Bi.person', label: 'Report Abuse'),
       ],
