@@ -1,4 +1,5 @@
 // activity.dart
+import 'package:acti_buddy/features/activity/domain/entities/activity_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -74,5 +75,22 @@ class ActivityModel {
       'updatedAt': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
       'location': location,
     };
+  }
+
+  ActivityEntity toEntitity() {
+    return ActivityEntity(
+      id: id,
+      name: name,
+      description: description,
+      startDate: startDate,
+      endDate: endDate,
+      createdBy: createdBy,
+      participants: participants,
+      cancelledAt: cancelledAt,
+      deletedAt: deletedAt,
+      finishedAt: finishedAt,
+      updatedAt: updatedAt,
+      // location: location,
+    );
   }
 }

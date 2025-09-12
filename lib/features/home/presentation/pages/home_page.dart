@@ -113,10 +113,7 @@ class _QuickActionsSection extends StatelessWidget {
           icon: 'Bi.calendar_heart',
           label: 'My Activities',
           onTap: () {
-            const MyToast(
-              type: MyToastType.success,
-              message: 'Activity created successfully.',
-            ).show(context);
+            context.push(RoutePath.myActivity);
           },
         ),
         MyQuickActionButton(icon: 'Bi.geo_alt', label: 'Activities Nearby'),
