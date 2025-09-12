@@ -399,6 +399,7 @@ class ActivityCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 12),
+
               ActivityDateTimeInfo(activity: activity),
               const SizedBox(height: 12),
               ActivityParticipantsInfo(activity: activity),

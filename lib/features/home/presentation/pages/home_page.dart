@@ -98,6 +98,7 @@ class _QuickActionsSection extends StatelessWidget {
       shrinkWrap: true,
       crossAxisCount: 4,
       crossAxisSpacing: 4,
+      mainAxisSpacing: 4,
       childAspectRatio: 0.95,
       physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.all(8),
@@ -107,6 +108,13 @@ class _QuickActionsSection extends StatelessWidget {
           label: 'Create an Activity',
           onTap: () {
             context.push(RoutePath.createActivity);
+          },
+        ),
+        MyQuickActionButton(
+          icon: 'Bi.person_plus',
+          label: 'Join an Activity',
+          onTap: () {
+            // context.push(RoutePath.findFriends);
           },
         ),
         MyQuickActionButton(

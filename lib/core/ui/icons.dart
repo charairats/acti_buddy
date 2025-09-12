@@ -17,6 +17,8 @@ String iconFromName(String name) {
     'Bi.stars': Bi.stars,
     'Bi.hammer': Bi.hammer,
     'Bi.heart_pulse': Bi.heart_pulse,
+    'Bi.people': Bi.people,
+    'Bi.person_plus': Bi.person_plus,
   };
 
   return nameToIcon[name] ?? Bi.question_circle;
