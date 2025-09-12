@@ -13,6 +13,7 @@ class ActivityModel {
     required this.endDate,
     required this.createdBy,
     required this.participants,
+    this.categoryId,
     this.cancelledAt,
     this.deletedAt,
     this.finishedAt,
@@ -30,6 +31,7 @@ class ActivityModel {
       endDate: (doc['endDate'] as Timestamp).toDate(),
       createdBy: doc['createdBy'] as String,
       participants: doc['participants'] as int,
+      categoryId: doc['categoryId'] as String?,
       cancelledAt: doc['cancelledAt'] != null
           ? (doc['cancelledAt'] as Timestamp).toDate()
           : null,
@@ -57,6 +59,7 @@ class ActivityModel {
   final DateTime? updatedAt;
   final String createdBy;
   final int participants;
+  final String? categoryId;
   final GeoPoint? location;
 
   Map<String, dynamic> toDocument() {
@@ -67,6 +70,7 @@ class ActivityModel {
       'endDate': Timestamp.fromDate(endDate),
       'createdBy': createdBy,
       'participants': participants,
+      'categoryId': categoryId,
       'cancelledAt': cancelledAt != null
           ? Timestamp.fromDate(cancelledAt!)
           : null,
@@ -86,6 +90,7 @@ class ActivityModel {
       endDate: endDate,
       createdBy: createdBy,
       participants: participants,
+      categoryId: categoryId,
       cancelledAt: cancelledAt,
       deletedAt: deletedAt,
       finishedAt: finishedAt,

@@ -1,8 +1,8 @@
 import 'package:acti_buddy/acti_buddy.dart';
+import 'package:acti_buddy/core/ui/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/bi.dart';
 
 class CreateActivityPage extends ConsumerStatefulWidget {
   const CreateActivityPage({super.key});
@@ -62,6 +62,7 @@ class _CreateActivityPageState extends ConsumerState<CreateActivityPage> {
             startDate: activity.startDate,
             endDate: activity.endDate,
             participants: activity.participants,
+            categoryId: activity.categoryId,
           );
 
       if (mounted) {
@@ -119,6 +120,8 @@ class CreateActivityForm extends ConsumerWidget {
           ActivityTitleField(controller: formData.titleController),
           const SizedBox(height: 16),
           ActivityDescriptionField(controller: formData.descriptionController),
+          const SizedBox(height: 16),
+          ActivityCategorySelector(formData: formData),
           const SizedBox(height: 16),
           ActivityDateTimeSelector(formData: formData),
           const SizedBox(height: 16),
@@ -193,6 +196,206 @@ class ActivityDescriptionField extends StatelessWidget {
         }
         return null;
       },
+    );
+  }
+}
+
+class ActivityCategorySelector extends StatefulWidget {
+  const ActivityCategorySelector({
+    required this.formData,
+    super.key,
+  });
+
+  final CreateActivityFormData formData;
+
+  @override
+  State<ActivityCategorySelector> createState() =>
+      _ActivityCategorySelectorState();
+}
+
+class _ActivityCategorySelectorState extends State<ActivityCategorySelector> {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return InkWell(
+      onTap: () => _showCategoryBottomSheet(context),
+      child: InputDecorator(
+        decoration: const InputDecoration(
+          labelText: 'Category',
+          hintText: 'Select a Category',
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.formData.selectedCategoryName ?? '',
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: widget.formData.selectedCategoryName != null
+                          ? theme.colorScheme.onSurface
+                          : theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.arrow_drop_down,
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showCategoryBottomSheet(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => CategoryBottomSheet(
+        formData: widget.formData,
+        onCategorySelected: (categoryId, categoryName) {
+          Navigator.of(context).pop();
+          if (mounted) {
+            setState(() {
+              widget.formData.selectedCategoryId = categoryId;
+              widget.formData.selectedCategoryName = categoryName;
+            });
+          }
+        },
+      ),
+    );
+  }
+}
+
+class CategoryBottomSheet extends ConsumerWidget {
+  const CategoryBottomSheet({
+    required this.formData,
+    required this.onCategorySelected,
+    super.key,
+  });
+
+  final CreateActivityFormData formData;
+  final void Function(String categoryId, String categoryName)
+  onCategorySelected;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final cs = Theme.of(context).colorScheme;
+    final categoriesAsync = ref.watch(browseByCategoriesProvider);
+
+    return Container(
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.7,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(16),
+
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'เลือกหมวดหมู่',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    color: cs.onSurface,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(Icons.close),
+                ),
+              ],
+            ),
+          ),
+          Flexible(
+            child: categoriesAsync.when(
+              data: (categories) => ListView.builder(
+                shrinkWrap: true,
+                itemCount: categories.length,
+                itemBuilder: (context, index) {
+                  final category = categories[index];
+                  final isSelected = formData.selectedCategoryId == category.id;
+
+                  return ListTile(
+                    leading: Iconify(
+                      iconFromName(category.iconName),
+                      color: isSelected
+                          ? theme.colorScheme.primary
+                          : theme.colorScheme.onSurfaceVariant,
+                    ),
+                    title: Text(
+                      category.nameThai,
+                      style: TextStyle(
+                        color: isSelected
+                            ? theme.colorScheme.primary
+                            : theme.colorScheme.onSurface,
+                        fontWeight: isSelected
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                    subtitle: Text(
+                      category.nameEnglish,
+                      style: TextStyle(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    trailing: isSelected
+                        ? Icon(
+                            Icons.check_circle,
+                            color: theme.colorScheme.primary,
+                          )
+                        : null,
+                    onTap: () =>
+                        onCategorySelected(category.id, category.nameThai),
+                  );
+                },
+              ),
+              loading: () => const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(32),
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+              error: (error, stack) => Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(32),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.error_outline,
+                        size: 48,
+                        color: theme.colorScheme.error,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'เกิดข้อผิดพลาดในการโหลดหมวดหมู่',
+                        style: theme.textTheme.bodyLarge,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 8),
+                      TextButton(
+                        onPressed: () =>
+                            ref.refresh(browseByCategoriesProvider),
+                        child: const Text('ลองใหม่'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -439,6 +642,8 @@ class CreateActivityFormData {
   DateTime? selectedDate;
   TimeOfDay? startTime;
   TimeOfDay? endTime;
+  String? selectedCategoryId;
+  String? selectedCategoryName;
 
   bool isValid() {
     return selectedDate != null && startTime != null && endTime != null;
@@ -476,6 +681,7 @@ class CreateActivityFormData {
       endDate: endDateTime,
       createdBy: creatorId,
       participants: int.parse(participantsController.text),
+      categoryId: selectedCategoryId,
     );
   }
 

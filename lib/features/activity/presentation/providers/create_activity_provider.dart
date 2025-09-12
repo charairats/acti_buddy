@@ -23,6 +23,7 @@ class CreateActivityNotifier extends AsyncNotifier<void> {
     required DateTime startDate,
     required DateTime endDate,
     required int participants,
+    String? categoryId,
     File? imageFile,
   }) async {
     state = const AsyncValue.loading();
@@ -39,13 +40,13 @@ class CreateActivityNotifier extends AsyncNotifier<void> {
     }
 
     try {
-      String? imageUrl;
-      if (imageFile != null) {
-        // 1. Upload the image to Firebase Storage
-        final imagePath =
-            'activities/${user.uid}/${DateTime.now().toIso8601String()}.jpg';
-        // imageUrl = await storageService.uploadFile(imageFile, imagePath);
-      }
+      // Note: Image upload functionality commented out for now
+      // if (imageFile != null) {
+      //   String imageUrl;
+      //   final imagePath = 'activities/${user.uid}/${DateTime.now().toIso8601String()}.jpg';
+      //   imageUrl = await storageService.uploadFile(imageFile, imagePath);
+      // }
+
       // Create an Activity entity
       final newActivity = ActivityModel(
         id: id,
@@ -55,6 +56,7 @@ class CreateActivityNotifier extends AsyncNotifier<void> {
         endDate: endDate,
         createdBy: user.uid,
         participants: participants,
+        categoryId: categoryId,
       ).toDocument();
 
       // Call the repository to add the activity

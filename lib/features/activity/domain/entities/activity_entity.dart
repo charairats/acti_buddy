@@ -7,6 +7,7 @@ class ActivityEntity {
     required this.endDate,
     required this.createdBy,
     required this.participants,
+    this.categoryId,
     this.cancelledAt,
     this.deletedAt,
     this.finishedAt,
@@ -20,6 +21,7 @@ class ActivityEntity {
   final DateTime endDate;
   final String createdBy;
   final int participants;
+  final String? categoryId;
   final DateTime? cancelledAt;
   final DateTime? deletedAt;
   final DateTime? finishedAt;
