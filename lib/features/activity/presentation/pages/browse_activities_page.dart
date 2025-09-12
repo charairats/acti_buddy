@@ -1,4 +1,5 @@
 import 'package:acti_buddy/acti_buddy.dart';
+import 'package:acti_buddy/core/ui/icons.dart';
 import 'package:acti_buddy/features/activity/data/repositories/browse_activity_repository_impl.dart';
 import 'package:acti_buddy/features/activity/domain/entities/activity_entity.dart';
 import 'package:acti_buddy/features/activity/presentation/providers/activity_participant_provider.dart';
@@ -6,6 +7,10 @@ import 'package:acti_buddy/features/activity/presentation/providers/browse_activ
 import 'package:acti_buddy/features/search/presentation/providers/browse_by_categories_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/bi.dart';
+import 'package:iconify_flutter/icons/ph.dart';
 import 'package:intl/intl.dart';
 
 class BrowseActivitiesPage extends ConsumerStatefulWidget {
@@ -56,22 +61,27 @@ class _BrowseActivitiesPageState extends ConsumerState<BrowseActivitiesPage> {
 
     return categoriesAsync.when(
       data: (categories) {
-        final selectedCategory = categories.firstWhere(
-          (cat) => cat.id == browseState.selectedCategoryId,
-          orElse: () => categories.first, // Default fallback
-        );
+        String displayText;
+        if (browseState.selectedCategoryId == null) {
+          displayText = 'All Categories';
+        } else {
+          final selectedCategory = categories.firstWhere(
+            (cat) => cat.id == browseState.selectedCategoryId,
+            orElse: () => categories.first,
+          );
+          displayText = selectedCategory.nameEnglish;
+        }
 
-        return OutlinedButton(
+        return OutlinedButton.icon(
           onPressed: () => _showCategoryBottomSheet(categories),
-          child: Text(
-            browseState.selectedCategoryId == null
-                ? 'All Categories'
-                : selectedCategory.nameThai,
+          icon: Icon(Icons.category),
+          label: Text(
+            displayText,
             overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
-          // style: OutlinedButton.styleFrom(
-          //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          // ),
         );
       },
       loading: () => OutlinedButton.icon(
@@ -99,9 +109,9 @@ class _BrowseActivitiesPageState extends ConsumerState<BrowseActivitiesPage> {
       icon: const Icon(Icons.sort),
       label: Text(
         browseState.sortType == ActivitySortType.latest ? 'Latest' : 'Popular',
-      ),
-      style: OutlinedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
       ),
     );
   }
@@ -160,7 +170,10 @@ class _BrowseActivitiesPageState extends ConsumerState<BrowseActivitiesPage> {
                 final isSelected =
                     browseState.selectedCategoryId == category.id;
                 return ListTile(
-                  // leading: const Icon(Icons.category),
+                  leading: Iconify(
+                    iconFromName(category.iconName),
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                   title: Text(category.nameEnglish),
                   trailing: isSelected
                       ? const Icon(Icons.check, color: Colors.green)

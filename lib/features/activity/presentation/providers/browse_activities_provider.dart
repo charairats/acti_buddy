@@ -36,10 +36,13 @@ class BrowseActivitiesState {
     bool? isLoading,
     bool? hasMore,
     String? error,
+    bool clearCategoryId = false, // เพิ่ม flag สำหรับ clear category
   }) {
     return BrowseActivitiesState(
       activities: activities ?? this.activities,
-      selectedCategoryId: selectedCategoryId ?? this.selectedCategoryId,
+      selectedCategoryId: clearCategoryId
+          ? null
+          : (selectedCategoryId ?? this.selectedCategoryId),
       sortType: sortType ?? this.sortType,
       isLoading: isLoading ?? this.isLoading,
       hasMore: hasMore ?? this.hasMore,
@@ -108,6 +111,7 @@ class BrowseActivitiesNotifier extends StateNotifier<BrowseActivitiesState> {
     if (state.selectedCategoryId != categoryId) {
       state = state.copyWith(
         selectedCategoryId: categoryId,
+        clearCategoryId: categoryId == null, // ใช้ flag เมื่อต้องการ clear
         activities: [],
         hasMore: true,
         error: null,
