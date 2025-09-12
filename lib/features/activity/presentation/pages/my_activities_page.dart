@@ -2,47 +2,72 @@ import 'package:acti_buddy/acti_buddy.dart';
 import 'package:acti_buddy/features/activity/domain/entities/activity_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/bi.dart';
 
-class MyActivitiesPage extends ConsumerWidget {
+class MyActivitiesPage extends ConsumerStatefulWidget {
   const MyActivitiesPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MyActivitiesPage> createState() => _MyActivitiesPageState();
+}
+
+class _MyActivitiesPageState extends ConsumerState<MyActivitiesPage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final activitiesAsync = ref.watch(myActivitiesProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('กิจกรรมของฉัน'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => ref.refresh(myActivitiesProvider),
-          ),
-        ],
+        title: const Text('My Activities'),
+        bottom: TabBar(
+          controller: _tabController,
+          labelColor: theme.colorScheme.primary,
+          unselectedLabelColor: theme.colorScheme.onSurfaceVariant,
+          indicatorColor: theme.colorScheme.primary,
+          isScrollable: true,
+          tabs: [
+            Tab(
+              child: Text('Today'),
+            ),
+            Tab(
+              child: Text('Upcoming'),
+            ),
+            Tab(
+              child: Text('Ended'),
+            ),
+            Tab(
+              child: Text('Cancelled'),
+            ),
+          ],
+        ),
       ),
       body: activitiesAsync.when(
-        data: (activities) {
-          if (activities.isEmpty) {
-            return const EmptyActivitiesView();
-          }
-          return RefreshIndicator(
-            onRefresh: () => ref.refresh(myActivitiesProvider.future),
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16.0),
-              itemCount: activities.length,
-              itemBuilder: (context, index) {
-                final activity = activities[index];
-                return ActivityCard(
-                  activity: activity,
-                  onCancel: () => _showCancelDialog(context, ref, activity),
-                  onDelete: () => _showDeleteDialog(context, ref, activity),
-                  onView: () => _showActivityDetails(context, activity),
-                );
-              },
-            ),
-          );
-        },
+        data: (_) => TabBarView(
+          controller: _tabController,
+          children: [
+            TodayActivitiesTab(parent: this),
+            UpcomingActivitiesTab(parent: this),
+            EndedActivitiesTab(parent: this),
+            CancelledActivitiesTab(parent: this),
+          ],
+        ),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => ErrorView(
           error: error.toString(),
@@ -60,11 +85,7 @@ class MyActivitiesPage extends ConsumerWidget {
     );
   }
 
-  void _showCancelDialog(
-    BuildContext context,
-    WidgetRef ref,
-    ActivityEntity activity,
-  ) {
+  void showCancelDialog(ActivityEntity activity) {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
@@ -82,7 +103,7 @@ class MyActivitiesPage extends ConsumerWidget {
                 await ref
                     .read(myActivitiesProvider.notifier)
                     .cancelActivity(activity.id);
-                if (context.mounted) {
+                if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('ยกเลิกกิจกรรมสำเร็จ'),
@@ -91,7 +112,7 @@ class MyActivitiesPage extends ConsumerWidget {
                   );
                 }
               } catch (e) {
-                if (context.mounted) {
+                if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('เกิดข้อผิดพลาด: $e'),
@@ -108,11 +129,7 @@ class MyActivitiesPage extends ConsumerWidget {
     );
   }
 
-  void _showDeleteDialog(
-    BuildContext context,
-    WidgetRef ref,
-    ActivityEntity activity,
-  ) {
+  void showDeleteDialog(ActivityEntity activity) {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
@@ -132,7 +149,7 @@ class MyActivitiesPage extends ConsumerWidget {
                 await ref
                     .read(myActivitiesProvider.notifier)
                     .deleteActivity(activity.id);
-                if (context.mounted) {
+                if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('ลบกิจกรรมสำเร็จ'),
@@ -141,7 +158,7 @@ class MyActivitiesPage extends ConsumerWidget {
                   );
                 }
               } catch (e) {
-                if (context.mounted) {
+                if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('เกิดข้อผิดพลาด: $e'),
@@ -158,10 +175,174 @@ class MyActivitiesPage extends ConsumerWidget {
     );
   }
 
-  void _showActivityDetails(BuildContext context, ActivityEntity activity) {
+  void showActivityDetails(ActivityEntity activity) {
     showDialog<void>(
       context: context,
       builder: (context) => ActivityDetailDialog(activity: activity),
+    );
+  }
+}
+
+class TodayActivitiesTab extends ConsumerWidget {
+  const TodayActivitiesTab({required this.parent, super.key});
+
+  final _MyActivitiesPageState parent;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activities = ref.watch(todayActivitiesProvider);
+
+    if (activities.isEmpty) {
+      return RefreshIndicator(
+        onRefresh: () => ref.refresh(myActivitiesProvider.future),
+        child: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: const [
+            SizedBox(height: 200),
+            EmptyActivitiesView(),
+          ],
+        ),
+      );
+    }
+
+    return RefreshIndicator(
+      onRefresh: () => ref.refresh(myActivitiesProvider.future),
+      child: ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemCount: activities.length,
+        itemBuilder: (context, index) {
+          final activity = activities[index];
+          return ActivityCard(
+            activity: activity,
+            onCancel: () => parent.showCancelDialog(activity),
+            onDelete: () => parent.showDeleteDialog(activity),
+            onView: () => parent.showActivityDetails(activity),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class UpcomingActivitiesTab extends ConsumerWidget {
+  const UpcomingActivitiesTab({required this.parent, super.key});
+
+  final _MyActivitiesPageState parent;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activities = ref.watch(upcomingActivitiesProvider);
+
+    if (activities.isEmpty) {
+      return RefreshIndicator(
+        onRefresh: () => ref.refresh(myActivitiesProvider.future),
+        child: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: const [
+            SizedBox(height: 200),
+            EmptyActivitiesView(),
+          ],
+        ),
+      );
+    }
+
+    return RefreshIndicator(
+      onRefresh: () => ref.refresh(myActivitiesProvider.future),
+      child: ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemCount: activities.length,
+        itemBuilder: (context, index) {
+          final activity = activities[index];
+          return ActivityCard(
+            activity: activity,
+            onCancel: () => parent.showCancelDialog(activity),
+            onDelete: () => parent.showDeleteDialog(activity),
+            onView: () => parent.showActivityDetails(activity),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class EndedActivitiesTab extends ConsumerWidget {
+  const EndedActivitiesTab({required this.parent, super.key});
+
+  final _MyActivitiesPageState parent;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activities = ref.watch(endedActivitiesProvider);
+
+    if (activities.isEmpty) {
+      return RefreshIndicator(
+        onRefresh: () => ref.refresh(myActivitiesProvider.future),
+        child: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: const [
+            SizedBox(height: 200),
+            EmptyActivitiesView(),
+          ],
+        ),
+      );
+    }
+
+    return RefreshIndicator(
+      onRefresh: () => ref.refresh(myActivitiesProvider.future),
+      child: ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemCount: activities.length,
+        itemBuilder: (context, index) {
+          final activity = activities[index];
+          return ActivityCard(
+            activity: activity,
+            onCancel: () {}, // Cannot cancel ended activities
+            onDelete: () => parent.showDeleteDialog(activity),
+            onView: () => parent.showActivityDetails(activity),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class CancelledActivitiesTab extends ConsumerWidget {
+  const CancelledActivitiesTab({required this.parent, super.key});
+
+  final _MyActivitiesPageState parent;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activities = ref.watch(cancelledActivitiesProvider);
+
+    if (activities.isEmpty) {
+      return RefreshIndicator(
+        onRefresh: () => ref.refresh(myActivitiesProvider.future),
+        child: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: const [
+            SizedBox(height: 200),
+            EmptyActivitiesView(),
+          ],
+        ),
+      );
+    }
+
+    return RefreshIndicator(
+      onRefresh: () => ref.refresh(myActivitiesProvider.future),
+      child: ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemCount: activities.length,
+        itemBuilder: (context, index) {
+          final activity = activities[index];
+          return ActivityCard(
+            activity: activity,
+            onCancel: () {}, // Cannot cancel already cancelled activities
+            onDelete: () => parent.showDeleteDialog(activity),
+            onView: () => parent.showActivityDetails(activity),
+          );
+        },
+      ),
     );
   }
 }
@@ -183,11 +364,13 @@ class ActivityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final cs = Theme.of(context).colorScheme;
     final isActive = activity.cancelledAt == null && activity.deletedAt == null;
     final isPast = activity.endDate.isBefore(DateTime.now());
 
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
+      color: cs.surfaceContainer,
       elevation: 2,
       child: InkWell(
         onTap: onView,
@@ -204,6 +387,7 @@ class ActivityCard extends StatelessWidget {
                       activity.name,
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
+                        color: cs.onPrimaryContainer,
                       ),
                     ),
                   ),
@@ -403,23 +587,23 @@ class EmptyActivitiesView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.event_busy,
+          Iconify(
+            Bi.calendar2_x,
             size: 80,
-            color: theme.colorScheme.onSurfaceVariant,
+            color: theme.colorScheme.onSurface,
           ),
           const SizedBox(height: 16),
           Text(
-            'ยังไม่มีกิจกรรม',
+            'There are no activities.',
             style: theme.textTheme.titleLarge?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
+              color: theme.colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            'สร้างกิจกรรมแรกของคุณกันเถอะ!',
+            "Let's create your first activity!",
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
+              color: theme.colorScheme.onSurface,
             ),
           ),
         ],
