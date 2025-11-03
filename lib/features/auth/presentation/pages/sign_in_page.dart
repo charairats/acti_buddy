@@ -38,7 +38,7 @@ class SignInPage extends ConsumerWidget {
               ),
               Center(
                 child: Text(
-                  'Sign in to ActiBuddy',
+                  'Sign in to Hobby Buddy',
                   style: Theme.of(
                     context,
                   ).textTheme.headlineLarge?.copyWith(color: cs.onSurface),

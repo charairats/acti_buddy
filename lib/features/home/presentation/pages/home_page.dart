@@ -125,7 +125,7 @@ class _QuickActionsSection extends StatelessWidget {
           },
         ),
         MyQuickActionButton(icon: 'Bi.geo_alt', label: 'Activities Nearby'),
-        MyQuickActionButton(icon: 'Bi.person', label: 'Report Abuse'),
+        // MyQuickActionButton(icon: 'Bi.person', label: 'Report Abuse'),
       ],
     );
   }

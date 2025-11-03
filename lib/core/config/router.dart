@@ -1,4 +1,6 @@
 import 'package:acti_buddy/acti_buddy.dart';
+import 'package:acti_buddy/features/activity/domain/entities/activity_entity.dart';
+import 'package:acti_buddy/features/activity/presentation/pages/activity_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
@@ -16,6 +18,8 @@ class RouteName {
   static const createActivity = 'create_activity';
   static const myActivity = 'my_activity';
   static const browseActivity = 'browse_activity';
+  static const searchResults = 'search_results';
+  static const activityDetail = 'activity_detail';
 }
 
 class RoutePath {
@@ -29,6 +33,8 @@ class RoutePath {
   static const createActivity = '/create-activity';
   static const myActivity = '/my-activity';
   static const browseActivity = '/browse-activity';
+  static const searchResults = '/search-results';
+  static const activityDetail = '/activity-detail';
 }
 
 class RouteConfig {
@@ -89,11 +95,28 @@ class RouteConfig {
       path: RoutePath.myActivity,
       name: RouteName.myActivity,
       builder: (context, state) => const MyActivitiesPage(),
+      routes: [
+        GoRoute(
+          path: RoutePath.activityDetail,
+          name: RouteName.activityDetail,
+          builder: (context, state) {
+            final activity = state.extra as ActivityEntity;
+            return ActivityDetailPage(
+              activity: activity,
+            );
+          },
+        ),
+      ],
     ),
     GoRoute(
       path: RoutePath.browseActivity,
       name: RouteName.browseActivity,
       builder: (context, state) => const BrowseActivitiesPage(),
+    ),
+    GoRoute(
+      path: RoutePath.searchResults,
+      name: RouteName.searchResults,
+      builder: (context, state) => const SearchResultsPage(),
     ),
   ];
 }

@@ -412,41 +412,54 @@ class ActivityCard extends StatelessWidget {
         onTap: onView,
         borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
+          padding: const EdgeInsets.fromLTRB(16, 12, 4, 12),
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                activity.name,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: cs.onPrimaryContainer,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                activity.description,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      activity.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: cs.onSurface,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      activity.description,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 12),
 
-              ActivityDateTimeInfo(activity: activity),
-              const SizedBox(height: 12),
-              ActivityParticipantsInfo(activity: activity),
-              const SizedBox(height: 16),
-              ActivityActionButtons(
-                activity: activity,
-                isActive: isActive,
-                isPast: isPast,
-                onCancel: onCancel,
-                onDelete: onDelete,
-                onView: onView,
+                    ActivityDateTimeInfo(activity: activity),
+                    const SizedBox(height: 12),
+                    ActivityParticipantsInfo(activity: activity),
+                    const SizedBox(height: 16),
+
+                    // ActivityActionButtons(
+                    //   activity: activity,
+                    //   isActive: isActive,
+                    //   isPast: isPast,
+                    //   onCancel: onCancel,
+                    //   onDelete: onDelete,
+                    //   onView: onView,
+                    // ),
+                  ],
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.more_vert),
+                onPressed: () {},
               ),
             ],
           ),
